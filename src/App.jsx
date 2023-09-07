@@ -1,11 +1,13 @@
 import "./App.css";
 import Blog from "./components/blog/Blog";
+import Courses from "./components/courses/Courses";
 
 function App() {
   return (
-    <div className="App">
+    <div className="container">
       <>
-        <Blog />
+        {/* <Blog /> */}
+        <Courses />
       </>
     </div>
   );
