@@ -7,7 +7,7 @@ function ListCoursesGrid(props) {
       <div className="row my-3">
         {props.dataGrid.map((c, index) => (
           <div className="col-md-6 my-2" key={index}>
-            <Grid key={index} label={c.label} image={c.image} />
+            <Grid id={index} label={c.label} image={c.image} />
           </div>
         ))}
       </div>

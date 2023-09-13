@@ -3,12 +3,16 @@ import Swal from "sweetalert2";
 
 function Users() {
   const [users, setUsers] = useState([]);
-  const [userlogin, setUserlogin] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const getAllUsers = () => {
     fetch("https://api.github.com/users")
-      .then((res) => res.json())
-      .then((response) => setUsers(response))
+      .then((res) => {
+        return res.json();
+      })
+      .then((response) => {
+        console.log(response);
+        setUsers(response);
+      })
       .catch((err) => console.log(err));
   };
   const goToCompte = (link) => {
@@ -53,37 +57,22 @@ function Users() {
     //   setUsers(newListUsers);
     // }
   };
-  // const findUser = (event) => {
-  //   //setUserlogin();
-  //   console.log("login:", event.target.value);
-  //   fetch(`https://api.github.com/search/users?q=${event.target.value}`)
-  //     .then((res) => res.json())
-  //     .then((response) => {
-  //       console.log(response.items[0]);
-  //       setUserSerached(response.items[0]);
-  //       console.log("userSerached", userSerached);
-  //       console.log(users);
-  //       setUsers(userSerached);
-  //       console.log(users);
-  //       // setUserlogin("");
-  //     })
-  //     .catch((err) => console.log(err));
-  //   //setUsers([...users, user]);
-  // };
   const findUser = (event) => {
     const inputValue = event.target.value;
-    setUserlogin(inputValue);
     console.log(inputValue);
 
     if (inputValue.trim() === "") {
-      // Clear the search results if the input is empty
       setSearchResults([]);
     } else {
       // Fetch data and update searchResults
       fetch(`https://api.github.com/search/users?q=${inputValue}`)
         .then((res) => res.json())
         .then((response) => {
-          setSearchResults(response.items);
+          const results = response.items;
+          setSearchResults(
+            results.filter((item) => item.login.startsWith(inputValue))
+            // results.filter((item) => item.login==inputValue))
+          );
           console.log(searchResults);
         })
         .catch((err) => console.log(err));
@@ -121,16 +110,24 @@ function Users() {
                     src={user.avatar_url}
                     alt="Photo"
                   />
-                  <div className="card-body" id={user.id}>
+                  <div className="card-body">
                     <h4 className="card-title">{user.login}</h4>
                     <button
-                      id={user.id}
                       className="btn btn-success my-1"
                       onClick={() => goToCompte(user.html_url)}
                     >
-                      {/* <a href={users.html_url} target="_blanck">Visit compte</a> */}
                       Visit compte
                     </button>
+
+                    <a
+                      className="btn btn-info"
+                      href={user.html_url}
+                      target="_blank"
+                      // rel="noreferrer"
+                    >
+                      Read more...
+                    </a>
+
                     <button
                       id={user.id}
                       className="btn btn-danger my-1"

@@ -1,17 +1,21 @@
 import React, { useState } from "react";
 
-function FormCourse({ saveCourse }) {
+function FormCourse({ registerCourse }) {
   const [label, setLabel] = useState("");
   const [image, setImage] = useState("");
   const labelField = (event) => {
+    // console.log("event", event);
+    // console.log("target", event.target);
+    // console.log("value", event.target.value);
     setLabel(event.target.value);
   };
+
   const imageField = (event) => {
     setImage(event.target.value);
   };
   const transfer = (event) => {
     event.preventDefault();
-    saveCourse({ label, image });
+    registerCourse({ label, image });
     console.log("trasfer", label, image);
     setLabel("");
     setImage("");

@@ -1,12 +1,13 @@
 import React from "react";
 
 function ListCourses(props) {
+  console.log(props);
   return (
     <>
       <ul className="list-group my-5">
-        {props.datalist.map((c, index) => (
+        {props.datalist.map((item, index) => (
           <li className="list-group-item" key={index}>
-            {c.label}
+            {item.label}
           </li>
         ))}
       </ul>

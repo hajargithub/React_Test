@@ -2,6 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function Grid({ id, label, image }) {
+  const obj = { idtest: 1, labeltest: "ghita", imagetest: "url" };
+  // let idtest = aobj.id;
+  // let labeltest = aobj.label;
+  // let imagetest = aobj.image;
+  let { idtest, labeltest, imagetest } = obj;
+  // console.log(idtest);
+  // console.log(labeltest);
+  // console.log(imagetest);
   return (
     <>
       {/* Destruction 

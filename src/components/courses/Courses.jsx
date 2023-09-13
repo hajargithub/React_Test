@@ -29,7 +29,7 @@ const Courses = () => {
   ]);
   const AddCourse = ({ label, image }) => {
     // const newcourse = { id: Math.random, label, image };
-    setCourses([...courses, { label, image }]);
+    setCourses([...courses, { id: Math.random, label, image }]);
     // setCourses((prev)=>{
     //     return[...prev,newcourse]
     // });
@@ -50,7 +50,7 @@ const Courses = () => {
       </div>
       <div className="row my-4">
         <div className="col-md-4 mx-auto">
-          <FormCourse saveCourse={AddCourse} />
+          <FormCourse registerCourse={AddCourse} />
         </div>
       </div>
       <div className="row my-5">
@@ -59,7 +59,7 @@ const Courses = () => {
             <button className="btn btn-warning me-1">List</button>
             <button className="btn btn-warning">Grid</button>
           </div>
-          <ListCourses datalist={courses} />
+          <ListCourses datalist={courses} test="test" />
           <ListCoursesGrid dataGrid={courses} />
         </div>
       </div>
