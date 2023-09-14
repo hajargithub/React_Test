@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import Spinner from "../shared/Spinner";
 
 function Users() {
   const [users, setUsers] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
+  const [loading, setLoading] = useState(true);
   const getAllUsers = () => {
     fetch("https://api.github.com/users")
       .then((res) => {
@@ -12,6 +14,7 @@ function Users() {
       .then((response) => {
         console.log(response);
         setUsers(response);
+        setLoading(false);
       })
       .catch((err) => console.log(err));
   };
@@ -64,6 +67,7 @@ function Users() {
     if (inputValue.trim() === "") {
       setSearchResults([]);
     } else {
+      setLoading(true);
       // Fetch data and update searchResults
       fetch(`https://api.github.com/search/users?q=${inputValue}`)
         .then((res) => res.json())
@@ -73,82 +77,101 @@ function Users() {
             results.filter((item) => item.login.startsWith(inputValue))
             // results.filter((item) => item.login==inputValue))
           );
-          console.log(searchResults);
+          // setTimeout(() => {
+          //   setLoading(false);
+          // }, 2000);
+          setLoading(false);
+          console.log(loading);
         })
         .catch((err) => console.log(err));
     }
   };
   useEffect(() => {
-    console.log("Loading...");
+    console.log(loading);
     getAllUsers();
+    console.log(loading);
   }, []);
-
   return (
     <>
-      <div className="row my-3">
-        <div className="col-md-6">
-          <h1>List of users</h1>
-        </div>
-        <div className="col-md-6 text-end">
-          <input
-            onChange={findUser}
-            className="form-control"
-            type="search"
-            id="gsearch"
-            name="gsearch"
-            placeholder="Search"
-            //value={userlogin}
-          ></input>
-        </div>
+      {loading ? (
+        <Spinner>
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </Spinner>
+      ) : (
         <div className="row my-3">
-          {(searchResults.length > 0 ? searchResults : users).map(
-            (user, index) => (
-              <div className="col-md-3 my-2" key={index}>
-                <div className="card">
-                  <img
-                    className="card-img-top"
-                    src={user.avatar_url}
-                    alt="Photo"
-                  />
-                  <div className="card-body">
-                    <h4 className="card-title">{user.login}</h4>
-                    <button
-                      className="btn btn-success my-1"
-                      onClick={() => goToCompte(user.html_url)}
-                    >
-                      Visit compte
-                    </button>
+          <div className="col-md-6">
+            <h1>List of users</h1>
+          </div>
+          <div className="col-md-6 text-end d-flex">
+            <input
+              onChange={findUser}
+              className="form-control"
+              type="search"
+              id="gsearch"
+              name="gsearch"
+              placeholder="Search"
+              //value={userlogin}
+            ></input>
+            {/* <button
+             onClick={reload}
+            className="btn btn-success my-1"
+          >
+            Search
+          </button> */}
+          </div>
+          <div className="row my-3">
+            {(searchResults.length > 0 ? searchResults : users).map(
+              (user, index) => (
+                <div className="col-md-3 my-2" key={index}>
+                  <div className="card">
+                    <img
+                      className="card-img-top"
+                      src={user.avatar_url}
+                      alt="Photo"
+                    />
+                    <div className="card-body">
+                      <h4 className="card-title">{user.login}</h4>
+                      <button
+                        className="btn btn-success my-1"
+                        onClick={() => goToCompte(user.html_url)}
+                      >
+                        Visit compte
+                      </button>
 
-                    <a
-                      className="btn btn-info"
-                      href={user.html_url}
-                      target="_blank"
-                      // rel="noreferrer"
-                    >
-                      Read more...
-                    </a>
+                      <a
+                        className="btn btn-info"
+                        href={user.html_url}
+                        target="_blank"
+                        //pour ne peux referencier le lien de la page
+                        rel="noreferrer"
+                      >
+                        Read more...
+                      </a>
 
-                    <button
-                      id={user.id}
-                      className="btn btn-danger my-1"
-                      onClick={() => supprimer(user.id)}
-                    >
-                      Supprimer
-                    </button>
-                    <button
-                      id={user.id}
-                      className="btn btn-danger m-1"
-                      onClick={() => deleteUser(user)}
-                    >
-                      Delete
-                    </button>
+                      <button
+                        id={user.id}
+                        className="btn btn-danger my-1"
+                        onClick={() => supprimer(user.id)}
+                      >
+                        Supprimer
+                      </button>
+                      <button
+                        id={user.id}
+                        className="btn btn-danger m-1"
+                        onClick={() => deleteUser(user)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )
-          )}
+              )
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }
