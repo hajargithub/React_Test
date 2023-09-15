@@ -1,0 +1,21 @@
+{
+  "articles": [
+    {
+      "title": "Updated Title",
+      "id": 1
+    },
+    {
+      "title": "Updated partially title",
+      "body": "learn all about the web front and backend using JS1",
+      "active": true,
+      "id": 2
+    }
+  ],
+  "categories": [
+    {
+      "id": 2,
+      "title": "Banck",
+      "active": true
+    }
+  ]
+}

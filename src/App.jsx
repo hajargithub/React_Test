@@ -1,4 +1,5 @@
 import "./App.css";
+import Articles from "./components/articles/Articles";
 import Blog from "./components/blog/Blog";
 import Courses from "./components/courses/Courses";
 import Test from "./components/users/Test";
@@ -10,7 +11,8 @@ function App() {
       <>
         {/* <Blog /> */}
         {/* <Courses /> */}
-        <Users />
+        {/* <Users /> */}
+        <Articles />
       </>
     </div>
   );
