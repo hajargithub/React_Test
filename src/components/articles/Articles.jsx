@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Card from "./Card";
 import Hero from "./Hero";
+import ListArticles from "./ListArticles";
 import ListCategories from "./ListCategories";
 
 function Articles() {
@@ -18,18 +18,12 @@ function Articles() {
       </div>
       <div className="row">
         <div className="col-md-6">
-          <div className="ul">
-            <li>
-              <Card data={articles} />
-            </li>
+          <div className="col-md-4">
+            <ListArticles data={articles} />
           </div>
         </div>
         <div className="col-md-6 text-end">
-          <div className="ul">
-            <li>
-              <ListCategories datalist={articles} />
-            </li>
-          </div>
+          <ListCategories datalist={articles} />
         </div>
       </div>
     </>
